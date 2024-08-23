@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "github.codespaces",
+        "github.vscode-pull-request-github",
+        "ms-vscode.remote-server"
+    ]
+}
