@@ -2,6 +2,7 @@
     "recommendations": [
         "github.codespaces",
         "github.vscode-pull-request-github",
-        "ms-vscode.remote-server"
+        "ms-vscode.remote-server",
+        "github.vscode-github-actions"
     ]
 }
