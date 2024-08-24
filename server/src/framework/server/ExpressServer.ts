@@ -3,6 +3,7 @@ import path from "path";
 import { createServer, Server as HTTPServer } from 'http';
 import dotenv from "dotenv";
 import { userRoutes } from "../routes/user/UserRoutes";
+import cookieparser from 'cookie-parser';
 
 
 dotenv.config();
@@ -16,6 +17,7 @@ export class ExpressServer {
         this.app = express();
         this.server = createServer(this.app);
 
+        this.configureFrontend();
         this.configureMiddleware();
         this.configureRoutes();
         this.configureErrorHandling();
@@ -24,21 +26,13 @@ export class ExpressServer {
 
     private configureMiddleware(): void {
         this.app.use(express.json());
-          
-    
+        this.app.use(cookieparser())
         const publicPath = path.join(__dirname, '..', 'public');
         this.app.use(express.static(publicPath));
     }
 
     private configureRoutes(): void {
         this.app.use("/api", userRoutes);
-
-        this.app.use('*', (req: Request, res: Response) => {
-            res.status(404).json({
-                success: false,
-                message: 'Route not found'
-            });
-        });
     }
 
     private configureErrorHandling(): void {
@@ -58,6 +52,17 @@ export class ExpressServer {
         this.server.listen(port, () => {
             console.log(`Express server running on port ${port}`);
         });
+    }
+
+    private configureFrontend(): void{
+        this.app.use(express.static(path.join(__dirname, '/client/dist')));
+
+        this.app.get('*', (req: Request, res: Response) => {
+          res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+        });
+        
+        
+        
     }
 }
 
