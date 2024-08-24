@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 export class UserLoginUseCase implements IUserLoginUseCase{
   constructor(private iuserrepository: IUserRepository){};
 
-  async UserLogin(email: string, password: string): Promise<string | User | undefined> {
+  async UserLogin(email: string, password: string): Promise<string | User > {
       try {
         const userData = await this.iuserrepository.FindUserByEmail(email);
         
@@ -27,7 +27,8 @@ export class UserLoginUseCase implements IUserLoginUseCase{
       
 
       } catch (error: any) {
-        console.log(error.message)
+        console.log(error.message);
+        return 'error'
       }
   }
 }

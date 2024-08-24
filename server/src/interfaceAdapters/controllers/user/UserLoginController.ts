@@ -12,7 +12,7 @@ export class UserLoginController {
         req.body.password
       );
 
-      if (data !== "Invalid credentials" && data !== "User do not exist") {
+      if (data !== "Invalid credentials" && data !== "User do not exist" || data !== 'error') {
         const userData = {
           username: data?.username,
           email: data?.email,
