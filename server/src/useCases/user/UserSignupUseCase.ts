@@ -1,24 +1,20 @@
 import { User } from "../../entities/types/user/User";
 import { IUserSignupUseCase } from "../../entities/useCaseInterfaces/user/IUserSignupUseCase";
 import { IUserRepository } from "../../interfaceAdapters/repositories/user/IUserRepository";
-import otpGenerator from 'otp-generator';
+
 import bcrypt from 'bcrypt'
-import { SendEmailOtp } from "../../framework/nodeMailer/NodeMailer";
+import { SendEmailOtp } from "../../framework/services/nodeMailer/NodeMailer";
+import { otp } from "../../framework/services/generateOtp/GenerateOtp";
 
 export class UserSignupUseCase  implements IUserSignupUseCase{
     constructor(private iuserRepository: IUserRepository){}
 
     async SignupUser(user: User): Promise<User | any> {
 
-        const OTP = otpGenerator.generate(6, {
-            upperCaseAlphabets: false,
-            lowerCaseAlphabets: false,
-            specialChars: false,
-            digits: true,
-          });
+
 
           const existUser = await this.iuserRepository.FindUserByEmail(user.email);
-   
+          const OTP :string = await otp();
 
           console.log(OTP)
           const passwordHashed = await bcrypt.hash(user.password, 10);

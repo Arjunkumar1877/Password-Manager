@@ -1,7 +1,7 @@
 import axios from 'axios';
 import bgGround from '../assets/bg.png';
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import {  useNavigate, useParams } from 'react-router-dom';
+import {  useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import OtpImage  from '../assets/3388628.png'
 
@@ -10,6 +10,8 @@ const OtpVerification: React.FC = () => {
   const [seconds, setSeconds] = useState(30);
   const params = useParams<{ ph: string  } >();
   const navigate = useNavigate();
+  const location = useLocation();
+  const emailRecieved: string = location.state;
 
   useEffect(() => {
     if (seconds > 0) {
@@ -22,7 +24,8 @@ const OtpVerification: React.FC = () => {
 
   }, [params.ph]);
 
- 
+ console.log(emailRecieved);
+ console.log(otp)
 
   const handleChange = (element: HTMLInputElement, index: number) => {
     if (isNaN(Number(element.value))) return;
@@ -41,7 +44,22 @@ const OtpVerification: React.FC = () => {
   };
 
   const handleVerifyOtp = async () => {
-   
+   try {
+    const res = await axios.post('/api/verify', {
+      otp: otp.join(''),
+      email: emailRecieved
+    })
+
+    console.log(res.data)
+
+    if(res.data){
+      navigate('/login');
+    }else{
+      toast('Otp enterd was incorrect');
+    }
+   } catch (error) {
+    console.log(error)
+   }
   };
 
   const handleSendingEmail = async()=>{
