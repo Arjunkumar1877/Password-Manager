@@ -7,6 +7,7 @@ import PasswordGenerate from "./pages/PasswordGenerate";
 import {Passbook }from "./pages/Passbook";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/add_password" element={<AddNewPassword />} />
           <Route path="/generate_password" element={<PasswordGenerate />} />
           <Route path="/passbook" element={<Passbook />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </div>

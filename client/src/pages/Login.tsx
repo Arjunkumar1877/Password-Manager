@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import bgGround from '../assets/bg.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInSuccess } from '../redux/user/userSlice';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -11,13 +13,19 @@ const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false); // State to toggle password visibility
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: any)=> state.user);
 
-  // Form validation function
+  useEffect(()=>{
+  if(currentUser){
+    navigate('/home')
+  }
+  },[])
+
   const validateForm = (): boolean => {
     let formIsValid = true;
     const formErrors: { [key: string]: string } = {};
 
-    // Email validation
     if (!email) {
       formErrors.email = "Email is required";
       formIsValid = false;
@@ -26,7 +34,6 @@ const Signup: React.FC = () => {
       formIsValid = false;
     }
 
-    // Password validation
     if (!password) {
       formErrors.password = "Password is required";
       formIsValid = false;
@@ -50,6 +57,7 @@ const Signup: React.FC = () => {
         console.log(res.data);
 
         if (res.data) {
+          dispatch(signInSuccess(res.data))
           toast.success('Login successful!');
           navigate('/home');
         } else {
@@ -62,7 +70,6 @@ const Signup: React.FC = () => {
     }
   };
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -80,7 +87,7 @@ const Signup: React.FC = () => {
             <label className="text-gray-100 font-medium text-sm md:text-xs">Email</label>
             <input
               type="email"
-              className={`p-2 border border-gray-100 border-opacity-90 bg-white bg-opacity-20 rounded-lg focus:outline-none focus:border-blue-500 text-sm md:text-xs ${errors.email ? 'border-red-500' : ''}`}
+              className={`text-white p-2 border border-gray-100 border-opacity-90 bg-white bg-opacity-20 rounded-lg focus:outline-none focus:border-blue-500 text-sm md:text-xs ${errors.email ? 'border-red-500' : ''}`}
               placeholder="Enter your email"
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
@@ -91,7 +98,7 @@ const Signup: React.FC = () => {
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'} // Toggle between 'password' and 'text'
-                className={`p-2 w-full border border-gray-100 border-opacity-90 bg-white bg-opacity-20 rounded-lg focus:outline-none focus:border-blue-500 text-sm md:text-xs ${errors.password ? 'border-red-500' : ''}`}
+                className={`text-white p-2 w-full border border-gray-100 border-opacity-90 bg-white bg-opacity-20 rounded-lg focus:outline-none focus:border-blue-500 text-sm md:text-xs ${errors.password ? 'border-red-500' : ''}`}
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
