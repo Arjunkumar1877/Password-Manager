@@ -2,13 +2,12 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
+    username: {
+     type: String,
+     required: true
+    },
     email: {
       type: String,
-      required: true,
-      unique: true,
-    },
-    phone: {
-      type: Number,
       required: true,
       unique: true,
     },
@@ -16,31 +15,13 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
+    otp: {
       type: String,
-    },
-    state: {
-      type: String,
-    },
-    city: {
-      type: String,
-    },
-    pincode: {
-      type: String,
-    },
-    landmark: {
-      type: String,
-    },
-    image: {
-      type: String,
+      required: true
     },
     verified: {
       type: Boolean,
       default: false,
-    },
-    blocked: {
-      type: Boolean,
-      default: false
     }
   },
   { timestamps: true }

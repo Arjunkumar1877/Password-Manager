@@ -1,5 +1,5 @@
-import { User } from "../../entities/types/user/User";
-import { UserModel } from "../../framework/database/models/UserModel";
+import { User } from "../../../entities/types/user/User";
+import { UserModel } from "../../../framework/database/models/user/UserModel";
 import { IUserRepository } from "./IUserRepository";
 
 export class UserRepository implements IUserRepository{

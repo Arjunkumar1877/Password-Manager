@@ -1,6 +1,6 @@
 import express from 'express'
 import { json } from 'body-parser'
-import { userRoutes } from '../routes/UserRoutes'
+import { userRoutes } from '../routes/user/UserRoutes'
 import dotenv from 'dotenv';
 
 dotenv.config();
