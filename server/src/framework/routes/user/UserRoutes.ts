@@ -1,10 +1,12 @@
 import { Router } from 'express'
-import { InjectedUserSignUpController } from '../../injection/user/UserInjections'
+import { InjectedUserLoginController, InjectedUserSignUpController } from '../../injection/user/UserInjections'
 const userRoutes = Router()
 
 
 
-userRoutes.post('/user_signup', InjectedUserSignUpController.SignupUserControl.bind(InjectedUserSignUpController));
+userRoutes.post('/signup', InjectedUserSignUpController.SignupUserControl.bind(InjectedUserSignUpController));
+
+userRoutes.post('/login', InjectedUserLoginController.LoginControl.bind(InjectedUserLoginController));
 
 
 

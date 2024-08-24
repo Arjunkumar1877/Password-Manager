@@ -8,7 +8,7 @@ import { SendEmailOtp } from "../../framework/nodeMailer/NodeMailer";
 export class UserSignupUseCase  implements IUserSignupUseCase{
     constructor(private iuserRepository: IUserRepository){}
 
-    async SignupUser(user: User): Promise<User | null> {
+    async SignupUser(user: User): Promise<User | any> {
 
         const OTP = otpGenerator.generate(6, {
             upperCaseAlphabets: false,
@@ -16,6 +16,9 @@ export class UserSignupUseCase  implements IUserSignupUseCase{
             specialChars: false,
             digits: true,
           });
+
+          const existUser = await this.iuserRepository.FindUserByEmail(user.email);
+   
 
           console.log(OTP)
           const passwordHashed = await bcrypt.hash(user.password, 10);
@@ -27,12 +30,14 @@ export class UserSignupUseCase  implements IUserSignupUseCase{
             otp: OTP
          } 
 
-         const SendEmail = await SendEmailOtp(updatedUser.email, OTP);
+        
+         if(existUser){
+            return null
+          }
 
+          const SendEmail = await SendEmailOtp(updatedUser.email, OTP);
        if(SendEmail){
         return this.iuserRepository.CreateUser(updatedUser);
-       }else{
-        return null;
        }
     }
 }

@@ -3,7 +3,11 @@ import { UserModel } from "../../../framework/database/models/user/UserModel";
 import { IUserRepository } from "./IUserRepository";
 
 export class UserRepository implements IUserRepository{
-    async CreateUser(user: User): Promise<any> {
+    async CreateUser(user: User): Promise<User | any> {
       return UserModel.create(user);
+    }
+
+    async FindUserByEmail(email: string): Promise<User | null> {
+      return UserModel.findOne({email: email});
     }
 }

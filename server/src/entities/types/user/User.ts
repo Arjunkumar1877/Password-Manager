@@ -6,5 +6,6 @@ export interface User {
   verified?: boolean;
   otp: string;
   createdAt?: number;
-  updatedAt?: number
+  updatedAt?: number;
+  __v?: number;
 }
