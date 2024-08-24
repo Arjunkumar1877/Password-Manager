@@ -4,6 +4,7 @@ import Signup from "./pages/Signup";
 import OtpVerification from "./pages/OtpVerification";
 import AddNewPassword from "./pages/AddNewPassword";
 import PasswordGenerate from "./pages/PasswordGenerate";
+import {Passbook }from "./pages/Passbook";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/verify_otp" element={<OtpVerification />} />
           <Route path="/add_password" element={<AddNewPassword />} />
           <Route path="/generate_password" element={<PasswordGenerate />} />
+          <Route path="/passbook" element={<Passbook />} />
         </Routes>
       </BrowserRouter>
     </div>
