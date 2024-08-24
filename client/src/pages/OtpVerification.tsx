@@ -1,14 +1,13 @@
 import axios from 'axios';
 import bgGround from '../assets/bg.png';
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import {  useLocation, useNavigate, useParams } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import OtpImage  from '../assets/3388628.png'
 
 const OtpVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [seconds, setSeconds] = useState(30);
-  const params = useParams<{ ph: string  } >();
   const navigate = useNavigate();
   const location = useLocation();
   const emailRecieved: string = location.state;
@@ -20,12 +19,9 @@ const OtpVerification: React.FC = () => {
     }
   }, [seconds]);
 
-  useEffect(() => {
-
-  }, [params.ph]);
+ 
 
  console.log(emailRecieved);
- console.log(otp)
 
   const handleChange = (element: HTMLInputElement, index: number) => {
     if (isNaN(Number(element.value))) return;
@@ -40,7 +36,17 @@ const OtpVerification: React.FC = () => {
   };
 
   const handleResendOtp = async () => {
-
+    try {
+      const res = await axios.post('/api/resend_otp', {
+        email: emailRecieved
+      })
+  
+      if(res.data){
+        toast('Otp has been sent to email.')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleVerifyOtp = async () => {
@@ -62,10 +68,7 @@ const OtpVerification: React.FC = () => {
    }
   };
 
-  const handleSendingEmail = async()=>{
- 
-  }
-
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4" style={{backgroundImage: `url(${bgGround})`}}>
@@ -88,7 +91,10 @@ const OtpVerification: React.FC = () => {
             />
           ))}
         </div>
-        <button onClick={handleVerifyOtp} className="w-full py-2 bg-gray-500 text-white font-semibold rounded-md hover:bg-black transition duration-300">Verify</button>
+
+        {
+          otp.join("").length > 5 &&  <button  onClick={handleVerifyOtp} className="w-full py-2 bg-gray-500 text-white font-semibold rounded-md hover:bg-black transition duration-300">Verify</button>
+        }
         <div className="mt-4 flex flex-col justify-center gap-1">
         <button disabled={seconds !== 0} onClick={handleResendOtp} className="text-white hover:underline">{seconds === 0 ? 'Resend OTP' : `Resend OTP in ${seconds} seconds`}</button>
                  

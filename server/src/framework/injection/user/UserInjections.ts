@@ -1,8 +1,10 @@
 import { UserLoginController } from "../../../interfaceAdapters/controllers/user/UserLoginController";
+import { UserResendOtpController } from "../../../interfaceAdapters/controllers/user/UserResendOtpController";
 import { UserSignupController } from "../../../interfaceAdapters/controllers/user/UserSignupController";
 import { UserVerifyController } from "../../../interfaceAdapters/controllers/user/UserVerifyController";
 import { UserRepository } from "../../../interfaceAdapters/repositories/user/UserRepository";
 import { UserLoginUseCase } from "../../../useCases/user/UserLoginUseCase";
+import { UserResendOtpUseCase } from "../../../useCases/user/UserResendOtpUseCase";
 import { UserSignupUseCase } from "../../../useCases/user/UserSignupUseCase";
 import { UserVerifyUsecase } from "../../../useCases/user/UserVerifyUsecase";
 
@@ -23,6 +25,6 @@ const userLoginUse = new UserLoginUseCase(mongoRepository);
 export const InjectedUserLoginController = new UserLoginController(userLoginUse);
 
 
-// // ------------------------------------------| USER LOGIN INJECTION |---------------------------------------------------------------------------------------------------------------------------------------------------- 
-// const userLoginUse = new UserLoginUseCase(mongoRepository);
-// export const InjectedUserLoginController = new UserLoginController(userLoginUse);
+// ------------------------------------------| USER RESEND OTP INJECTION |---------------------------------------------------------------------------------------------------------------------------------------------------- 
+const userResendOtpUse = new UserResendOtpUseCase(mongoRepository);
+export const InjectedUserResendOtpController = new UserResendOtpController(userResendOtpUse);

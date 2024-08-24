@@ -10,4 +10,12 @@ export class UserRepository implements IUserRepository{
     async FindUserByEmail(email: string): Promise<User | null> {
       return UserModel.findOne({email: email});
     }
+
+    async UpdateUserOtp(email: string, otp: string): Promise<User | null> {
+      return UserModel.findOneAndUpdate({email: email}, {
+        $set: {
+          otp: otp
+        }
+      }, {new: true});
+    }
 }
