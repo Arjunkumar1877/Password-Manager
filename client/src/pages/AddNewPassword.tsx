@@ -1,6 +1,6 @@
 import React from 'react';
 import bgGround from '../assets/bg.png';
-import { Link } from 'react-router-dom';
+
 
 const AddNewPassword: React.FC = () => {
   return (

@@ -8,7 +8,6 @@ import OtpImage  from '../assets/3388628.png'
 const OtpVerification: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [seconds, setSeconds] = useState(30);
-  const [adminData, setAdminData] = useState<any>({});
   const params = useParams<{ ph: string  } >();
   const navigate = useNavigate();
 
