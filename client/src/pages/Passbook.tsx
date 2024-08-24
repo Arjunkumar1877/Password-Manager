@@ -15,7 +15,7 @@ const passwords = [
 export const Passbook: React.FC = () => {
   return (
     <div
-      className="relative w-screen h-screen bg-cover bg-center flex justify-center items-center"
+      className="relative w-screen h-lvh  bg-cover bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${bgGround})` }}
     >
       <div className="flex flex-col justify-center items-center text-white bg-black bg-opacity-70 rounded-lg p-8 shadow-lg w-[90%] md:w-[600px] max-h-[90%]">

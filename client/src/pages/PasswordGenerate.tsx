@@ -1,6 +1,7 @@
 import React from 'react';
 import bgGround from '../assets/bg.png';
 import { FaCopy, FaSave } from 'react-icons/fa';
+import { BsEyeFill } from 'react-icons/bs';
 
 const PasswordGenerate: React.FC = () => {
   return (
@@ -12,13 +13,14 @@ const PasswordGenerate: React.FC = () => {
       <div className="flex flex-col gap-12 w-auto max-w-2xl md:w-[900px] bg-green-500 bg-opacity-40 p-10 rounded-lg shadow-2xl backdrop-blur-md overflow-y-scroll">
         
         {/* Password Display */}
-        <div className="flex flex-col p-6 bg-gray-800 bg-opacity-70 rounded-lg gap-6 shadow-md">
+        <div className="flex justify-center items-center p-6 bg-gray-800 bg-opacity-70 rounded-lg gap-6 shadow-md">
           <input
             type="text"
             className="w-full text-white py-2 px-4 bg-transparent border-2 border-gray-300 rounded-lg focus:outline-none"
             placeholder="Your generated password will appear here"
             readOnly
           />
+              <BsEyeFill className="cursor-pointer" />
         </div>
 
         {/* Customization Section */}

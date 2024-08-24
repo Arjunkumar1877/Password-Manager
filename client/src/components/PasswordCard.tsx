@@ -11,7 +11,7 @@ const PasswordCard: React.FC<{ name: string, time: string, password: string }> =
       </div>
       <p className="text-sm text-gray-400">{time}</p>
     </div>
-    <div className="flex flex-col md:flex-row items-center justify-between gap-1 w-full">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-1 w-full">
       <div className="flex items-center w-full">
         <p className="w-24">Password:</p>
         <div className="flex items-center gap-2 bg-gray-700 p-1 rounded-lg">
