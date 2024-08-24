@@ -22,7 +22,7 @@ export class UserLoginUseCase implements IUserLoginUseCase{
                 return "Invalid credentials";
             }
         }else{
-            return "User do not exist"
+            return "Invalid credentials"
         }
       
 
