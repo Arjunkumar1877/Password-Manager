@@ -21,7 +21,6 @@ export class UserVerifyUsecase implements IUserVerifyUsecase{
             }
         } catch (error) {
             return false;
-            console.log(error);
         }
     }
 }

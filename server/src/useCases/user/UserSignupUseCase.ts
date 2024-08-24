@@ -33,10 +33,8 @@ export class UserSignupUseCase  implements IUserSignupUseCase{
         
          if(existUser){
             return null
-          }
-
-          const SendEmail = await SendEmailOtp(updatedUser.email, OTP);
-       if(SendEmail){
+          }else{
+        await SendEmailOtp(updatedUser.email, OTP);
         return this.iuserRepository.CreateUser(updatedUser);
        }
     }

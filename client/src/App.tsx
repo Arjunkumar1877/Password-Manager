@@ -5,10 +5,13 @@ import OtpVerification from "./pages/OtpVerification";
 import AddNewPassword from "./pages/AddNewPassword";
 import PasswordGenerate from "./pages/PasswordGenerate";
 import {Passbook }from "./pages/Passbook";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div>
+      <ToastContainer />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Signup />} />
