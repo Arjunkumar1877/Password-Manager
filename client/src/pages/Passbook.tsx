@@ -5,6 +5,8 @@ import PasswordCard from "../components/PasswordCard";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
 
 
 
@@ -91,8 +93,13 @@ fetchPasswords();
       className="relative w-screen h-lvh  bg-cover bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${bgGround})` }}
     >
+      
       <div className="flex flex-col justify-center items-center text-white bg-black bg-opacity-70 rounded-lg p-8 shadow-lg w-[90%] md:w-[600px] max-h-[90%]">
-        <h1 className="text-4xl font-bold mb-6">Passbook</h1>
+        <h1 className="text-4xl flex gap-1 justify-center items-center font-bold mb-6">
+        <Link to="/home">
+      <IoArrowBackCircleOutline className='text-white text-4xl hover:text-gray-400' />
+      </Link>
+          Passbook</h1>
         <div className="flex flex-col justify-center items-center w-full h-full p-5 bg-gray-800 bg-opacity-40 rounded-lg shadow-md">
           
 
@@ -128,9 +135,12 @@ fetchPasswords();
   {allPasswords && allPasswords?.length > 0 ? allPasswords.map((passwordData: any, index: number) => (
     <PasswordCard
       key={index}
+      id={passwordData._id}
       name={passwordData.name}
       time={passwordData.createdAt}
       password={passwordData.password}
+      setAllPasswords={setAllPasswords}
+      userId={currentUser._id}
     />
   ))  : <h1>No Poswards available</h1>}
 </div>

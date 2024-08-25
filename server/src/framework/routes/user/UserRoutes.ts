@@ -40,6 +40,18 @@ userRoutes.post('/get_passwords', async(req, res)=>{
 
     res.json(passwords);
 
+});
+
+
+userRoutes.post("/delete_password", async(req, res)=>{
+    const deleted = await PasswordModel.findOneAndDelete({_id: req.body.id});
+
+    if(deleted){
+        const passwords = await PasswordModel.find({user: req.body.userId})
+        res.json({deleted: true, passwords: passwords});
+    }else{
+        res.json({deleted: false, Passwords: ""});
+    }
 })
 
 export { userRoutes }
