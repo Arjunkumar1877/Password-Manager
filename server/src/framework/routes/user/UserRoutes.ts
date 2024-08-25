@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { InjectedUserLoginController, InjectedUserResendOtpController, InjectedUserSignUpController, InjectedUserVerifyController } from '../../injection/user/UserInjections'
+import { InjectedUserLoginController, InjectedUserResendOtpController, InjectedUserSavepasswordController, InjectedUserSignUpController, InjectedUserVerifyController } from '../../injection/user/UserInjections'
 const userRoutes = Router()
 
 
@@ -11,6 +11,8 @@ userRoutes.post('/login', InjectedUserLoginController.LoginControl.bind(Injected
 userRoutes.post('/verify', InjectedUserVerifyController.UserVerifyControl.bind(InjectedUserVerifyController));
 
 userRoutes.post('/resend_otp', InjectedUserResendOtpController.ResendOtpControl.bind(InjectedUserResendOtpController));
+
+userRoutes.post('/save_password', InjectedUserSavepasswordController.UserSavePasswordControl.bind(InjectedUserSavepasswordController));
 
 
 

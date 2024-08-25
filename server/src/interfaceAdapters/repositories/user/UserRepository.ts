@@ -1,4 +1,6 @@
+import { PasswordTypes } from "../../../entities/types/user/Password";
 import { User } from "../../../entities/types/user/User";
+import { PasswordModel } from "../../../framework/database/models/user/PasswordsModel";
 import { UserModel } from "../../../framework/database/models/user/UserModel";
 import { IUserRepository } from "./IUserRepository";
 
@@ -17,5 +19,21 @@ export class UserRepository implements IUserRepository{
           otp: otp
         }
       }, {new: true});
+    }
+
+    async  SavePassword(PassData: PasswordTypes): Promise<string> {
+            const userData: PasswordTypes = {
+          user: PassData.user,
+          name: PassData.name,
+          password: PassData.password        
+        };
+    
+        const savedPassword = await PasswordModel.create(userData);
+    if(savedPassword){
+      return 'saved'
+    }else{
+      return 'failed'
+    }
+      
     }
 }

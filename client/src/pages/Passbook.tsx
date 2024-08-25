@@ -42,17 +42,17 @@ export const Passbook: React.FC = () => {
             </button>
           </div>
 
+          <div className="flex flex-col gap-4 h-[350px] w-full overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scroll">
+  {passwords.map((passwordData, index) => (
+    <PasswordCard
+      key={index}
+      name={passwordData.name}
+      time={passwordData.time}
+      password={passwordData.password}
+    />
+  ))}
+</div>
 
-          <div className="flex flex-col gap-4 h-[350px] w-full overflow-y-auto overflow-x-hidden">
-            {passwords.map((passwordData, index) => (
-              <PasswordCard
-                key={index}
-                name={passwordData.name}
-                time={passwordData.time}
-                password={passwordData.password}
-              />
-            ))}
-          </div>
         </div>
       </div>
     </div>

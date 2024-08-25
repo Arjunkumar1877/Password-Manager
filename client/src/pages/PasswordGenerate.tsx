@@ -24,7 +24,7 @@ const PasswordGenerate: React.FC = () => {
   const { currentUser } = useSelector((state: any)=> state.user);
   const [name, setName] = useState<string>("");
 
-
+console.log(currentUser)
 
 const handleGeneratePassword = ()=>{
   let charset = "";
@@ -62,7 +62,7 @@ useEffect(()=>{
 
 useEffect(()=>{
   const charsetSize = 94;
-  const guessesPerSecond = 1e9; // 1 billion guesses per second
+  const guessesPerSecond = 1e9;
   
   const time = calculatePasswordStrength(passwordLength, charsetSize, guessesPerSecond);
   setCrackTime(time)
@@ -86,21 +86,21 @@ function calculatePasswordStrength(length: number = passwordLength, charsetSize:
     setBgColor("bg-green-500")
     return (
       <span>
-        A computer takes <h1 className='text-green-500 text-2xl font-bold'>Centuries</h1> to crack this password.
+        A computer takes <h1 className='text-green-700 text-2xl font-bold'>Centuries</h1> to crack this password.
       </span>
     );
   } else if (yearsToCrack >= 1) {
     setBgColor("bg-yellow-500")
     return (
       <span>
-        A computer takes <strong className='text-yellow-500 text-2xl font-bold'>{yearsToCrack.toFixed(2)}</strong> years to crack this password.
+        A computer takes <strong className='text-yellow-700 text-2xl font-bold'>{yearsToCrack.toFixed(2)}</strong> years to crack this password.
       </span>
     );
   } else if (daysToCrack >= 1) {
     setBgColor("bg-orange-500")
     return (
       <span>
-        A computer takes <strong className='text-orange-500 text-2xl font-bold'> {daysToCrack.toFixed(2)}</strong> days to crack this password.
+        A computer takes <strong className='text-orange-700 text-2xl font-bold'> {daysToCrack.toFixed(2)}</strong> days to crack this password.
       </span>
     );
   } else {
@@ -117,13 +117,17 @@ function calculatePasswordStrength(length: number = passwordLength, charsetSize:
 const handleSavePassword = async()=>{
   try {
      const res = await axios.post("/api/save_password", {
-      id: currentUser._id,
+      user: currentUser._id,
       name: name,
-      passord: password
+      password: password
      })
 
-     if(res.data){
+     console.log(res.data)
+
+     if(res.data === "saved"){
        navigate("/passbook");
+    }else{
+      toast("Error on saving password")
     }
   } catch (error) {
     console.log(error)
@@ -230,7 +234,7 @@ const handleSavePassword = async()=>{
                 type="range"
                 className="mt-1 w-full"
                 value={passwordLength}
-                min="2"
+                min="6"
                 max="100"
                 step="1"
                 defaultValue="10"
@@ -271,7 +275,7 @@ const handleSavePassword = async()=>{
                   placeholder="Password Name"
                 />
                {
-                name &&  <button  className="flex items-center justify-center text-white bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                name &&  <button onClick={handleSavePassword }  className="flex items-center justify-center text-white bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition">
                 <FaSave className="mr-2" /> Save
               </button>
                }

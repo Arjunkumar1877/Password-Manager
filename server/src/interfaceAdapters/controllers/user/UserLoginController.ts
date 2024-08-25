@@ -15,6 +15,7 @@ export class UserLoginController {
 
       if (data !== "Invalid credentials" && data !== 'error') {
         const userData = {
+          _id: data?._id,
           username: data?.username,
           email: data?.email,
         };
