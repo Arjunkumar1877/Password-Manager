@@ -2,7 +2,7 @@ import React from 'react';
 import bgGround from '../assets/bg.png';
 
 
-const AddNewPassword: React.FC = () => {
+const ForgotPassword: React.FC = () => {
   return (
     <div
       className="relative w-screen h-screen bg-cover bg-center flex justify-center items-center"
@@ -40,4 +40,4 @@ const AddNewPassword: React.FC = () => {
   );
 };
 
-export default AddNewPassword;
+export default ForgotPassword;
