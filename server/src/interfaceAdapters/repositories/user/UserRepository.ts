@@ -36,4 +36,64 @@ export class UserRepository implements IUserRepository{
     }
       
     }
+
+    async UserVerifyUpdate(userId: string): Promise<boolean> {
+       const updatedUser = await UserModel.findOneAndUpdate({_id: userId}, {
+        $set: {
+          verified: true
+        }
+       }, {new: true});
+
+       if(updatedUser){
+        return true
+       }else{
+        return false;
+       }
+    }
+
+    async UserSaveNewPassword(email: string, password: string): Promise<boolean> {
+      const updated = await UserModel.findOneAndUpdate({email: email},{
+        password: password
+      }, {new: true});
+    
+      if(updated){
+        return true;
+      }else{
+        return false;
+      }
+
+    }
+
+    async GetUserPassBook(userId: string, startDate?: string, endDate?: string): Promise<any> {
+      let passwords;
+    
+
+      if (startDate && endDate) {
+        if (startDate !== '' && endDate !== '') {
+          
+          passwords = await PasswordModel.find({
+            user: userId,
+            createdAt: {
+              $gte: new Date(startDate),
+              $lte: new Date(endDate),
+            },
+          })
+            .sort({ createdAt: -1 }) 
+            .exec();
+    
+          return passwords;
+        } else {
+          return [];
+        }
+      } else {
+        
+        passwords = await PasswordModel.find({ user: userId })
+          .sort({ createdAt: -1 }) 
+          .exec();
+    
+        return passwords;
+      }
+    }
+    
+   
 }

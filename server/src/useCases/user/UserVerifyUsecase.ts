@@ -10,9 +10,14 @@ export class UserVerifyUsecase implements IUserVerifyUsecase{
         try {
             const data: User | null = await this.iuserrepository.FindUserByEmail(email);
 
-            if(data){
+            if(data?._id && data){
                 if(data.otp  === otp){
-                    return true;
+                    const update: any = this.iuserrepository.UserVerifyUpdate(data?._id);
+                    if(update){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }else{
                     return false;
                 }

@@ -6,4 +6,7 @@ export interface IUserRepository{
     FindUserByEmail(email: string): Promise<User | null>;
     UpdateUserOtp(email: string, otp: string): Promise<User | null>;
     SavePassword(PassData: PasswordTypes): Promise<string>;
+    UserVerifyUpdate(userId: string): Promise<boolean>;
+    UserSaveNewPassword(email: string, password: string): Promise<boolean>;
+    GetUserPassBook(userId: string, startDate: string, endData: string): Promise<any>;
 } 

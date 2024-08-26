@@ -48,7 +48,7 @@ const Home: React.FC = () => {
       <div className="flex flex-col gap-8 items-center">
         <div
           className="p-4 cursor-pointer hover:bg-gray-800 hover:text-gray-300 text-white border border-white rounded-lg w-full max-w-md text-center md:text-2xl transition-colors duration-300 ease-in-out"
-          onClick={() => navigate('/generate_password')}
+          onClick={() => navigate('/')}
         >
           Generate a New Password
         </div>

@@ -86,21 +86,21 @@ function calculatePasswordStrength(length: number = passwordLength, charsetSize:
     setBgColor("bg-green-500")
     return (
       <span>
-        A computer takes <h1 className='text-green-700 text-2xl font-bold'>Centuries</h1> to crack this password.
+        A computer takes <h1 className='text-green-500 text-2xl font-bold'>Centuries</h1> to crack this password.
       </span>
     );
   } else if (yearsToCrack >= 1) {
     setBgColor("bg-yellow-500")
     return (
       <span>
-        A computer takes <strong className='text-yellow-700 text-2xl font-bold'>{yearsToCrack.toFixed(2)}</strong> years to crack this password.
+        A computer takes <strong className='text-yellow-500 text-2xl font-bold'>{yearsToCrack.toFixed(2)}</strong> years to crack this password.
       </span>
     );
   } else if (daysToCrack >= 1) {
     setBgColor("bg-orange-500")
     return (
       <span>
-        A computer takes <strong className='text-orange-700 text-2xl font-bold'> {daysToCrack.toFixed(2)}</strong> days to crack this password.
+        A computer takes <strong className='text-orange-500 text-2xl font-bold'> {daysToCrack.toFixed(2)}</strong> days to crack this password.
       </span>
     );
   } else {
@@ -115,176 +115,190 @@ function calculatePasswordStrength(length: number = passwordLength, charsetSize:
 }
 
 const handleSavePassword = async()=>{
+if(currentUser){
   try {
-     const res = await axios.post("/api/save_password", {
-      user: currentUser._id,
-      name: name,
-      password: password
-     })
+    const res = await axios.post("/api/save_password", {
+     user: currentUser._id,
+     name: name,
+     password: password
+    })
 
-     console.log(res.data)
+    console.log(res.data)
 
-     if(res.data === "saved"){
-       navigate("/passbook");
-    }else{
-      toast("Error on saving password")
-    }
-  } catch (error) {
-    console.log(error)
-  }
+    if(res.data === "saved"){
+      navigate("/passbook");
+   }else{
+     toast("Error on saving password")
+   }
+ } catch (error) {
+   console.log(error)
+ }
+}else{
+  navigate('/login')
+}
 }
 
 
   return (
     <div
-      className="relative w-screen h-screen bg-cover bg-center flex justify-center items-center"
-      style={{ backgroundImage: `url(${bgGround})` }}
-    >
- 
-      {/* Main Container */}
-      <div className={`flex flex-col gap-12 w-auto max-w-2xl md:w-[900px] ${bgColor} bg-opacity-70 p-10 rounded-lg shadow-2xl backdrop-blur-md `}>
-        
-        {/* Password Display */}
-   
-        <div className="flex justify-center items-center p-6 bg-gray-800 bg-opacity-70 rounded-lg gap-6 shadow-md">
-      <Link to="/home">
-      <IoArrowBackCircleOutline className='text-white text-4xl' />
-      </Link>
-          <input
-            type={showPassword ? "text" : 'password'}
-            value={password}
-            className="w-full text-white py-2 px-4 bg-transparent border-2 border-gray-300 rounded-lg focus:outline-none"
-            placeholder={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>)=> {setPassword(e.target.value), setPasswordLength(e.target.value.length)}}
+    className="relative w-screen h-full bg-cover bg-center flex justify-center items-center overflow-x-hidden"
+    style={{ backgroundImage: `url(${bgGround})` }}
+  >
+    {/* Main Container */}
+    <div className={`flex flex-col gap-12 w-auto max-w-2xl md:w-3/4 ${bgColor} bg-opacity-70 p-10 rounded-lg shadow-2xl backdrop-blur-md `}>
+      
+      {/* Heading */}
+      <h1 className="text-center text-white text-3xl md:text-4xl font-bold">Password Generator</h1>
+      
+      {/* Password Display */}
+      <div className="flex justify-center items-center p-6 bg-gray-800 bg-opacity-70 rounded-lg gap-6 shadow-md">
+        <Link to="/home">
+          <IoArrowBackCircleOutline className='text-white text-4xl' />
+        </Link>
+        <input
+          type={showPassword ? "text" : 'password'}
+          value={password}
+          className="w-full text-white py-2 px-4 bg-transparent border-2 border-gray-300 rounded-lg focus:outline-none"
+          placeholder={password}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>)=> {setPassword(e.target.value), setPasswordLength(e.target.value.length)}}
+        />
+        {
+          !showPassword 
+            ? <BsEyeFill className="cursor-pointer text-3xl text-white" onClick={()=> setShowPassword(true)} /> 
+            : <FaEyeSlash className="cursor-pointer text-white text-3xl" onClick={()=>setShowPassword(false)} />
+        }
+      </div>
   
-          />
-              {
-                !showPassword ? <BsEyeFill className="cursor-pointer text-3xl text-white" onClick={()=> setShowPassword(true)} /> :       <FaEyeSlash className="cursor-pointer text-white text-3xl" onClick={()=>setShowPassword(false)} />
-
-              }
-
-              
-        </div>
-
-        {/* Customization Section */}
-        <div className="flex flex-col md:flex-row gap-10 justify-between">
-          
-          {/* Checkbox Section */}
-          <div className="flex flex-col gap-6 bg-gray-800 bg-opacity-20 p-6 rounded-lg w-full md:w-1/2 shadow-md">
-            <h2 className="text-center text-white text-xl md:text-2xl font-semibold">Customize</h2>
-            
-            {/* Checkbox Options */}
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                 checked={selectAll}
-                  className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
-                  onChange={handleSelectAll}
-                />
-                <p className="text-white">All Characters</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={useUpperCase}
-                  onChange={()=> setUseUpperCase(!useUpperCase)}
-                  className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
-                />
-                <p className="text-white">Uppercase</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={useLowerCase}
-                  onChange={()=> setUseLowerCase(!useLowerCase)}
-                  className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
-                />
-                <p className="text-white">Lowercase</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={useSymbols}
-                  onChange={()=> setUseSymbols(!useSymbols)}
-                  className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
-                />
-                <p className="text-white">Symbols</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={useNumbers}
-                  onChange={()=> setUseNumbers(!useNumbers)}
-                  className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
-                />
-                <p className="text-white">Numbers</p>
-              </div>
-
+      {/* Customization Section */}
+      <div className="flex flex-col md:flex-row gap-10 justify-between">
+        
+        {/* Checkbox Section */}
+        <div className="flex flex-col gap-6 bg-gray-800 bg-opacity-20 p-6 rounded-lg w-full md:w-1/2 shadow-md">
+          <h2 className="text-center text-white text-xl md:text-2xl font-semibold">Customize</h2>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={selectAll}
+                className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
+                onChange={handleSelectAll}
+              />
+              <p className="text-white">All Characters</p>
+            </div>
+            {/* Other checkboxes */}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={useUpperCase}
+                onChange={()=> setUseUpperCase(!useUpperCase)}
+                className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
+              />
+              <p className="text-white">Uppercase</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={useLowerCase}
+                onChange={()=> setUseLowerCase(!useLowerCase)}
+                className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
+              />
+              <p className="text-white">Lowercase</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={useSymbols}
+                onChange={()=> setUseSymbols(!useSymbols)}
+                className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
+              />
+              <p className="text-white">Symbols</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={useNumbers}
+                onChange={()=> setUseNumbers(!useNumbers)}
+                className="w-6 h-6 cursor-pointer rounded border-2 border-gray-300 bg-transparent"
+              />
+              <p className="text-white">Numbers</p>
             </div>
           </div>
-
-          {/* Controls Section */}
-          <div className="flex flex-col gap-6 w-full md:w-1/2">
-            
-            {/* Password Length */}
-            <div className="flex flex-col gap-2">
-              <p className="text-white text-sm md:text-base">Password Length ({passwordLength})</p>
+        </div>
+  
+        {/* Controls Section */}
+        <div className="flex flex-col gap-6 w-full md:w-1/2">
+          
+          {/* Password Length */}
+          <div className="flex flex-col gap-2">
+            <p className="text-white text-sm md:text-base">Password Length ({passwordLength})</p>
+            <input
+              type="range"
+              className="mt-1 w-full"
+              value={passwordLength}
+              min="6"
+              max="100"
+              step="1"
+              defaultValue="10"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>)=> {setPasswordLength((Number(e.target.value))), handleGeneratePassword()}}
+            />
+          </div>
+  
+          {/* Buttons */}
+          <div className="flex flex-col md:flex-row gap-4">
+            <CopyToClipboard text={password} 
+              onCopy={() => toast("Password copied to clipboard")}>
+              <button className="flex items-center justify-center border border-gray-400 p-3 rounded-lg text-white hover:bg-gray-900 transition w-full md:w-1/2">
+                <FaCopy className="mr-2" />  Copy Password
+              </button>
+            </CopyToClipboard>
+            <button onClick={handleGeneratePassword} className="flex items-center justify-center border border-gray-400 p-3 rounded-lg text-white hover:bg-gray-900 transition w-full md:w-1/2">
+              <FaCopy className="mr-2" /> Generate Password
+            </button>
+          </div>
+  
+          {/* Password Strength */}
+          <div className="flex flex-col md:flex-row items-center gap-3">
+            <p className='text-white text-xl'>{crackTime}</p>
+          </div>
+  
+          {/* Save Password */}
+          <div className="flex flex-col gap-4">
+            <p className="text-white">Enter a name to save the password</p>
+            <div className="flex items-center gap-4">
               <input
-                type="range"
-                className="mt-1 w-full"
-                value={passwordLength}
-                min="6"
-                max="100"
-                step="1"
-                defaultValue="10"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=> {setPasswordLength((Number(e.target.value))), handleGeneratePassword()}}
+                type="text"
+                value={name}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setName(e.target.value)}
+                className="bg-transparent border-2 border-gray-300 rounded-lg py-2 px-4 text-white w-full focus:outline-none"
+                placeholder="Password Name"
               />
-            </div>
-
-            {/* Buttons */}
-            <div className="flex flex-col md:flex-row gap-4">
-              <button >
-                
-              </button>
-
-              <CopyToClipboard text={password} 
-          onCopy={() => toast("Password copied to clipboard")}>
-          <button className="flex items-center justify-center border border-gray-400 p-3 rounded-lg text-white hover:bg-gray-900 transition w-full md:w-1/2"><FaCopy className="mr-2" />  Copy Password</button>
-        </CopyToClipboard>
-
-              <button onClick={handleGeneratePassword} className="flex items-center justify-center border border-gray-400 p-3 rounded-lg text-white hover:bg-gray-900 transition w-full md:w-1/2">
-                <FaCopy className="mr-2" /> Generate Password
-              </button>
-            </div>
-
-            {/* Password Strength */}
-            <div className="flex flex-col md:flex-row items-center gap-3">
-              <p className='text-white text-xl'>{crackTime}</p>
-            </div>
-
-            {/* Save Password */}
-            <div className="flex flex-col gap-4">
-              <p className="text-white">Enter a name to save the password</p>
-              <div className="flex items-center gap-4">
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setName(e.target.value)}
-                  className="bg-transparent border-2 border-gray-300 rounded-lg py-2 px-4 text-white w-full focus:outline-none"
-                  placeholder="Password Name"
-                />
-               {
-                name &&  <button onClick={handleSavePassword }  className="flex items-center justify-center text-white bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition">
-                <FaSave className="mr-2" /> Save
-              </button>
-               }
-              </div>
+              {
+                name && 
+                <button onClick={handleSavePassword} className="flex items-center justify-center text-white bg-green-600 px-4 py-2 rounded-lg hover:bg-green-500 transition">
+                  <FaSave className="mr-2" /> Save
+                </button>
+              }
             </div>
           </div>
         </div>
       </div>
+  
+      {/* Signup and Login Section */}
+     
+     {
+      !currentUser &&  <div className="flex flex-col items-center justify-center gap-4 mt-8">
+      <p className="text-white text-lg">Login to save the generated password.</p>
+      <Link to="/signup">
+        <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-500 transition">
+          Signup
+        </button>
+      </Link>
     </div>
+     }
+
+    </div>
+  </div>
+  
   );
 };
 

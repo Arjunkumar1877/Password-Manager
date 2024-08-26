@@ -79,7 +79,7 @@ const Signup: React.FC = () => {
         console.log(res.data)
 
         if (res.data) {
-          navigate('/verify_otp', { state: res.data.email });
+          navigate('/verify_otp?forgot=false', { state: res.data.email });
         }else{
           toast('Email Already exist..');
           console.log("Email exist")

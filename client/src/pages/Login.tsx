@@ -74,6 +74,43 @@ const Signup: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleForgotNavigate = async()=>{
+ 
+
+   let formIsValid = true;
+   const formErrors: { [key: string]: string } = {};
+
+   if (!email) {
+     formErrors.email = "Email is required";
+     formIsValid = false;
+     toast("Enter email to verify and add new password");
+     setErrors(formErrors)
+     return
+   } else if (!/\S+@\S+\.\S+/.test(email)) {
+     formErrors.email = "Invalid email address";
+     formIsValid = false;
+     setErrors(formErrors)
+     return
+   }
+
+
+   try {
+
+    const res = await axios.post('/api/resend_otp', {
+      email: email
+    })
+
+    if(res.data){
+      toast('Otp has been sent to email.')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+   navigate('/verify_otp?forget=true', {state: email}) 
+
+  }
+
   return (
     <div
       className="relative w-screen h-screen bg-cover bg-center flex justify-center items-center"
@@ -119,11 +156,10 @@ const Signup: React.FC = () => {
               Login
             </button>
 
-            <Link to="/verify_otp">
-              <p className="text-white text-center mt-4 text-sm md:text-xs">Forgot password?</p>
-            </Link>
-
-            <Link to="/">
+          
+              <p onClick={handleForgotNavigate} className="cursor-pointer text-white text-center mt-4 text-sm md:text-xs">Forgot password?</p>
+         
+            <Link to="/signup">
               <p className="text-white text-center mt-4 text-sm md:text-xs">Don't have an Account?</p>
             </Link>
           </div>

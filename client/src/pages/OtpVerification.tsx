@@ -11,6 +11,9 @@ const OtpVerification: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const emailRecieved: string = location.state;
+  const query = new URLSearchParams(location.search);
+  const forgotVerify = query.get("forget");
+  const forgotPassword: boolean = forgotVerify === 'true' ? true : false; 
 
   useEffect(() => {
     if (seconds > 0) {
@@ -37,6 +40,7 @@ const OtpVerification: React.FC = () => {
 
   const handleResendOtp = async () => {
     try {
+      setSeconds(30)
       const res = await axios.post('/api/resend_otp', {
         email: emailRecieved
       })
@@ -59,7 +63,12 @@ const OtpVerification: React.FC = () => {
     console.log(res.data)
 
     if(res.data){
-      navigate('/login');
+      if(forgotPassword === true){
+        navigate('/forgot_password', { state: emailRecieved});
+        toast("Enter your new Password..")
+      }else{
+        navigate("/login")
+      }
     }else{
       toast('Otp enterd was incorrect');
     }

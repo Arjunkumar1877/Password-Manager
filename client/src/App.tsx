@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Home from "./pages/Home";
 import ForgotPassword from "./pages/ForgotPassword";
+import ProtectUserRoute from "./components/ProtectUserRoute";
 
 function App() {
   return (
@@ -15,13 +16,15 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Signup />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/verify_otp" element={<OtpVerification />} />
+          <Route path="/" element={<PasswordGenerate />} />
           <Route path="/forgot_password" element={<ForgotPassword />} />
-          <Route path="/generate_password" element={<PasswordGenerate />} />
+          <Route element={<ProtectUserRoute />} >       
           <Route path="/passbook" element={<Passbook />} />
           <Route path="/home" element={<Home />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
