@@ -9,6 +9,7 @@ const http_1 = require("http");
 const dotenv_1 = __importDefault(require("dotenv"));
 const UserRoutes_1 = require("../routes/user/UserRoutes");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 class ExpressServer {
     constructor() {
@@ -20,6 +21,12 @@ class ExpressServer {
         this.startServer();
     }
     configureMiddleware() {
+        // Configure CORS
+        this.app.use((0, cors_1.default)({
+            origin: 'https://pm-client-seven.vercel.app', // Replace with your client URL
+            methods: 'GET,POST,PUT,DELETE,OPTIONS',
+            allowedHeaders: 'Content-Type,Authorization',
+        }));
         this.app.use(express_1.default.json());
         this.app.use((0, cookie_parser_1.default)());
     }

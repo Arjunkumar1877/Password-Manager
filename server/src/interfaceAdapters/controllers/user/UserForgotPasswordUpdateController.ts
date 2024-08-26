@@ -5,9 +5,10 @@ export class UserForgotPasswordUpdateController{
     constructor(private iuseraddnewpasswordusecase: IUserForgotPasswordUpdateUseCase){}
 
     async UserAddNewPasswordControll(req: Request, res: Response): Promise<void>{
-        console.log(req.body)
+        console.log(req.body);
+        console.log("forget password controller 💕💕💕💕💕💕")
         const data: boolean = await this.iuseraddnewpasswordusecase.UserAddNewPassword(req.body.email, req.body.password);
-    
+
         res.json(data);
     
     }

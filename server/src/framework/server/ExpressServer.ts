@@ -4,14 +4,13 @@ import { createServer, Server as HTTPServer } from 'http';
 import dotenv from "dotenv";
 import { userRoutes } from "../routes/user/UserRoutes";
 import cookieparser from 'cookie-parser';
-
+import cors from 'cors'; 
 
 dotenv.config();
 
 export class ExpressServer {
     private app: Application;
     private server: HTTPServer;
-
 
     constructor() {
         this.app = express();
@@ -24,8 +23,15 @@ export class ExpressServer {
     }
 
     private configureMiddleware(): void {
+        // Configure CORS
+        this.app.use(cors({
+            origin: 'https://pm-client-seven.vercel.app', // Replace with your client URL
+            methods: 'GET,POST,PUT,DELETE,OPTIONS',
+            allowedHeaders: 'Content-Type,Authorization',
+        }));
+
         this.app.use(express.json());
-        this.app.use(cookieparser())
+        this.app.use(cookieparser());
     }
 
     private configureRoutes(): void {
@@ -50,11 +56,7 @@ export class ExpressServer {
             console.log(`Express server running on port ${port}`);
         });
     }     
-    
 }
 
 // To initialize the server, create an instance of ExpressServer
 // new ExpressServer();
-
-
-

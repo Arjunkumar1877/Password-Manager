@@ -9,6 +9,7 @@ class UserResendOtpController {
     async ResendOtpControl(req, res) {
         try {
             const data = await this.iuserresendotpusecase.ResendOtp(req.body.email);
+            console.log("resent otp controller 💕💕💕💕💕💕");
             res.json(data);
         }
         catch (error) {

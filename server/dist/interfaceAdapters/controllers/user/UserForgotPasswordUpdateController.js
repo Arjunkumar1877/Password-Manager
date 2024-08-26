@@ -7,6 +7,7 @@ class UserForgotPasswordUpdateController {
     }
     async UserAddNewPasswordControll(req, res) {
         console.log(req.body);
+        console.log("forget password controller 💕💕💕💕💕💕");
         const data = await this.iuseraddnewpasswordusecase.UserAddNewPassword(req.body.email, req.body.password);
         res.json(data);
     }

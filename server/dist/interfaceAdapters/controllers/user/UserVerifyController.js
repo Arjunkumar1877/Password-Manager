@@ -8,6 +8,7 @@ class UserVerifyController {
     ;
     async UserVerifyControl(req, res) {
         try {
+            console.log("verfiy user controller");
             const data = await this.iuserverifyusecase.VerifyUser(req.body.email, req.body.otp);
             res.json(data);
         }

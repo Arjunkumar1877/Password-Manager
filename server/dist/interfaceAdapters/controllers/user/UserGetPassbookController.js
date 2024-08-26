@@ -9,6 +9,7 @@ class UserGetPassbookController {
     async GetUserPassbookControl(req, res) {
         try {
             console.log(req.body);
+            console.log("gt passbook 💕💕💕💕💕💕");
             const data = await this.igetuserpassbookusecase.GetUserPassbook(req.body.userId, req.body.startDate, req.body.endDate);
             console.log(data);
             res.json(data);

@@ -7,6 +7,7 @@ export class UserVerifyController{
 
   async UserVerifyControl(req: Request, res: Response): Promise<void>{
     try {
+      console.log("verfiy user controller")
         const data: boolean = await  this.iuserverifyusecase.VerifyUser(req.body.email, req.body.otp);
 
         res.json(data)

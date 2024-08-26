@@ -7,6 +7,7 @@ export class UserSignupController {
   async SignupUserControl(req: Request, res: Response): Promise<void> {
     try {
       const data = await this.iusersignupUseCase.SignupUser(req.body);
+      console.log("signup controller 💕💕💕💕💕💕")
       if (data) {
         const userData = {
           _id: data._id,

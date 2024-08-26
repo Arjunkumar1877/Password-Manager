@@ -8,6 +8,7 @@ class UserSignupController {
     async SignupUserControl(req, res) {
         try {
             const data = await this.iusersignupUseCase.SignupUser(req.body);
+            console.log("signup controller 💕💕💕💕💕💕");
             if (data) {
                 const userData = {
                     _id: data._id,
