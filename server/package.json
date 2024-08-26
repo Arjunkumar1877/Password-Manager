@@ -1,15 +1,19 @@
 {
   "name": "ts-clean-arch",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A clean architecture TypeScript project",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "npx nodemon",
+    "dev": "npx nodemon src/index.ts",
     "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
@@ -30,6 +34,5 @@
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
-  },
-  "description": ""
+  }
 }
